@@ -36,7 +36,8 @@ export const Courses = () => {
         // const token = await findToken();
         // console.log(token);
         const allCourses = await getAllCourses();
-        setCourses(() => [...allCourses.courses]);
+        const reverseCourses = allCourses.courses.reverse();
+        setCourses(() => [...reverseCourses]);
       } catch (error) {
         console.log(error?.message);
       }
@@ -45,16 +46,14 @@ export const Courses = () => {
     getCourses();
   }, []);
 
-  const visibleCourses = courses.slice(
-    10 * (Number(page) - 1),
-    10 * Number(page)
-  );
+  const visibleCourses = () =>
+    courses.slice(10 * (Number(page) - 1), 10 * Number(page));
 
   console.log(courses);
   const numberOfCourses = courses.length;
   return (
     <>
-      {numberOfCourses !== 0 && <CoursesList courses={visibleCourses} />}
+      {numberOfCourses !== 0 && <CoursesList courses={visibleCourses()} />}
       {numberOfCourses !== 0 && (
         <PaginationPanel currentPage={page} numberOfCourses={numberOfCourses} />
       )}

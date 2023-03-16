@@ -26,7 +26,6 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${TOKEN}`;
 // };
 
 export const getAllCourses = async () => {
-  // TOKEN = token;
   const respons = await axios.get('/core/preview-courses');
   return respons.data;
 };
