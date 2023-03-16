@@ -1,4 +1,4 @@
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 import styles from './CoursePreview.module.scss';
 
 export const CoursePreview = ({ course }) => {
