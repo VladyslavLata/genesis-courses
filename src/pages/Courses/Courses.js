@@ -17,8 +17,21 @@ export const Courses = () => {
   }, [currentPage, searchParams, setSearchParams]);
 
   useEffect(() => {
+    // const findToken = async () => {
+    //   const localStorageToken = localStorage.getItem('genesisToken');
+    //   if (localStorageToken) {
+    //     return localStorageToken;
+    //   } else {
+    //   const token = await getToken();
+    //   console.log(token);
+    //   return token;
+    //   }
+    // };
+    // findToken();
     const getCourses = async () => {
       try {
+        // const token = await findToken();
+        // console.log(token);
         const allCourses = await getAllCourses();
         setCourses(() => [...allCourses.courses]);
       } catch (error) {
