@@ -7,14 +7,17 @@ import { PaginationPanel } from 'components/PaginationPanel/PaginationPanel';
 
 export const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page');
 
   useEffect(() => {
     if (!currentPage) {
-      setSearchParams({ page: 1 });
+      setSearchParams({ page: page });
+    } else {
+      setPage(Number(currentPage));
     }
-  }, [currentPage, searchParams, setSearchParams]);
+  }, [currentPage, page, searchParams, setSearchParams]);
 
   useEffect(() => {
     // const findToken = async () => {
@@ -43,15 +46,18 @@ export const Courses = () => {
   }, []);
 
   const visibleCourses = courses.slice(
-    10 * (Number(currentPage) - 1),
-    10 * Number(currentPage)
+    10 * (Number(page) - 1),
+    10 * Number(page)
   );
 
   console.log(courses);
+  const numberOfCourses = courses.length;
   return (
     <>
-      {courses.length !== 0 && <CoursesList courses={visibleCourses} />}
-      {courses.length !== 0 && <PaginationPanel />}
+      {numberOfCourses !== 0 && <CoursesList courses={visibleCourses} />}
+      {numberOfCourses !== 0 && (
+        <PaginationPanel currentPage={page} numberOfCourses={numberOfCourses} />
+      )}
     </>
   );
 };
