@@ -1,0 +1,47 @@
+@import '../../sass/mixins.scss';
+@import "../../sass/variables.scss";
+
+.courses-list {
+  width: 100%;
+
+  @include mq(tab) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
+
+.course-item {
+  // padding: 10px;
+  width: 100%;
+  background-color: $seccond-bg-color;
+  border-radius: 20px;
+  transition: box-shadow 300ms $cubic ;
+  
+  &:hover, :focus {
+  box-shadow: 7px 9px 21px -2px rgba(0, 0, 0, 0.39);
+  }
+
+  @include mq(mobi-only){
+      &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  }
+
+
+  @include mq(tab) {
+    display: flex;
+    flex-direction: column;
+    // padding: 20px;
+    width: calc((100% - 20px) / 2);
+  }
+}
+
+.link {
+  padding: 10px;
+  border-radius: 20px;
+
+  @include mq(tab) {
+    padding: 20px;
+  }
+}
