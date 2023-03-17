@@ -53,6 +53,7 @@ export const Courses = () => {
   const numberOfCourses = courses.length;
   return (
     <>
+      <p>adas</p>
       {numberOfCourses !== 0 && <CoursesList courses={visibleCourses()} />}
       {numberOfCourses !== 0 && (
         <PaginationPanel currentPage={page} numberOfCourses={numberOfCourses} />

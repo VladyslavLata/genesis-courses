@@ -1,0 +1,9 @@
+@import "../../sass/mixins.scss";
+
+.section {
+padding: 20px 0;
+
+@include mq(tab) {
+  padding: 30px 0;
+}
+}
