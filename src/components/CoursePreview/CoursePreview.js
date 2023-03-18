@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 // import Hls from 'hls.js';
 // import { useVideoPlayer } from 'hooks/useVideoPlayer';
 import { videoPlayerInit } from 'utils/videoPlayerInit';
+// import { useVideoPlayer } from 'hooks/useVideoPlayer';
 import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
 
 export const CoursePreview = ({ course }) => {
@@ -17,9 +18,17 @@ export const CoursePreview = ({ course }) => {
   } = course;
   const videoElement = document.getElementById(id);
   // useVideoPlayer(toString(meta.courseVideoPreview?.link), id);
-
+  // useVideoPlayer()
   useEffect(() => {
-    const hls = videoPlayerInit(meta.courseVideoPreview?.link, videoElement);
+    if (!videoElement) {
+      console.log(videoElement);
+      return;
+    }
+    const hls = videoPlayerInit(
+      meta.courseVideoPreview?.link,
+      videoElement,
+      -1
+    );
     // let hls = null;
     // if (Hls.isSupported()) {
     //   hls = new Hls();
@@ -45,9 +54,9 @@ export const CoursePreview = ({ course }) => {
     console.log(e);
     e.stopPropagation();
     if (e.type === 'mouseover') {
-      videoElement.play();
+      videoElement?.play();
     } else if (e.type === 'mouseleave') {
-      videoElement.pause();
+      videoElement?.pause();
     }
   };
 

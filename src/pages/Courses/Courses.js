@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getAllCourses } from 'API/API';
 // import { Container } from 'components/Container/Container';
+import { Loader } from 'components/Loader/Loader';
 import { CoursesList } from 'components/CoursesList/CoursesList';
 import { PaginationPanel } from 'components/PaginationPanel/PaginationPanel';
 
@@ -24,21 +25,8 @@ export const Courses = () => {
   }, [currentPage, page, searchParams, setSearchParams]);
 
   useEffect(() => {
-    // const findToken = async () => {
-    //   const localStorageToken = localStorage.getItem('genesisToken');
-    //   if (localStorageToken) {
-    //     return localStorageToken;
-    //   } else {
-    //   const token = await getToken();
-    //   console.log(token);
-    //   return token;
-    //   }
-    // };
-    // findToken();
     const getCourses = async () => {
       try {
-        // const token = await findToken();
-        // console.log(token);
         const allCourses = await getAllCourses();
         const reverseCourses = allCourses.courses.reverse();
         setCourses(() => [...reverseCourses]);
@@ -57,7 +45,7 @@ export const Courses = () => {
   const numberOfCourses = courses.length;
   return (
     <>
-      <p>adas</p>
+      {!numberOfCourses && <Loader />}
       {numberOfCourses !== 0 && <CoursesList courses={visibleCourses()} />}
       {numberOfCourses !== 0 && (
         <PaginationPanel currentPage={page} numberOfCourses={numberOfCourses} />

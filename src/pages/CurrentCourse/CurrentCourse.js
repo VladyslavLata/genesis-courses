@@ -9,6 +9,7 @@ import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
 import { LessonsList } from 'components/LessonsList/LessonsList';
 import { LockedMessage } from 'components/LockedMessage/LockedMessage';
 // import { Modal } from 'components/Modal/Modal';
+import { Loader } from 'components/Loader/Loader';
 import { useStore } from 'Store/Store';
 import { VscMultipleWindows } from 'react-icons/vsc';
 import { ButtonIcon } from 'components/ButtonIcon/ButtonIcon';
@@ -49,39 +50,6 @@ export const CurrentCourse = () => {
 
   const { saveCurrentTimeVideo } = useVideoPlayer(currentLesson);
 
-  // useEffect(() => {
-  //   if (!currentLesson) {
-  //     return;
-  //   }
-  //   const videoElement = document.getElementById(courseId);
-  //   const time = JSON.parse(
-  //     localStorage.getItem(`Lesson-id-${currentLesson.id}`)
-  //   );
-  //   // console.log(time);
-  //   if (time) {
-  //     setstartVideoWith(time);
-  //   }
-  //   const hls = videoPlayerInit(
-  //     currentLesson.link,
-  //     videoElement,
-  //     startVideoWith
-  //   );
-
-  //   return () => {
-  //     hls.destroy();
-  //   };
-  // }, [currentLesson, courseId, startVideoWith]);
-
-  // const saveCurrentTimeVideo = e => {
-  //   if (!e.target.currentTime) {
-  //     return;
-  //   }
-  //   localStorage.setItem(
-  //     `Lesson-id-${currentLesson.id}`,
-  //     JSON.stringify(Math.floor(e.target.currentTime))
-  //   );
-  // };
-
   return (
     <>
       {course && currentLesson && (
@@ -90,7 +58,7 @@ export const CurrentCourse = () => {
             <video
               className={styles.video}
               id={courseId}
-              controls
+              controls={currentLesson.status === 'unlocked'}
               width="100%"
               poster={`${currentLesson?.previewImageLink}/${currentLesson.order}.webp`}
               onTimeUpdate={throttle(e => saveCurrentTimeVideo(e), 1000)}
@@ -101,14 +69,16 @@ export const CurrentCourse = () => {
           </div>
           <Title tag="h2">
             {`Current lesson: ${currentLesson.order} - ${currentLesson.title}`}{' '}
-            <ButtonIcon
-              onClick={() => {
-                onOpenModal();
-                addLessonOnModalVideo(currentLesson);
-              }}
-            >
-              <VscMultipleWindows />
-            </ButtonIcon>
+            {currentLesson.status === 'unlocked' && (
+              <ButtonIcon
+                onClick={() => {
+                  onOpenModal();
+                  addLessonOnModalVideo(currentLesson);
+                }}
+              >
+                <VscMultipleWindows />
+              </ButtonIcon>
+            )}{' '}
           </Title>
           <div>
             {course && <Title main>{`Course: ${course.title}`}</Title>}
@@ -118,7 +88,7 @@ export const CurrentCourse = () => {
               metaInfo={course.meta}
               // skillListStyle="main-skills-list"
             >
-              <p className={styles.description}>{course.description}</p>
+              <b className={styles.description}>{course.description}</b>
             </CoursesInfo>
           </div>
         </>
@@ -129,7 +99,7 @@ export const CurrentCourse = () => {
           onChangeCurrenLesson={setCurrentLesson}
         />
       )}
-      {/* <Modal /> */}
+      {!course && <Loader />}
     </>
   );
 };

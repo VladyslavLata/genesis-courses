@@ -1,0 +1,6 @@
+@import "../../sass/mixins.scss";
+
+.not-found {
+  height: 100vh;
+@include center;
+}
