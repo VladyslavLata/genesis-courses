@@ -15,7 +15,7 @@ import { VscMultipleWindows } from 'react-icons/vsc';
 import { ButtonIcon } from 'components/ButtonIcon/ButtonIcon';
 import styles from './CurrentCourse.module.scss';
 
-export const CurrentCourse = () => {
+const CurrentCourse = () => {
   const [course, setCourse] = useState(null);
   const [currentLesson, setCurrentLesson] = useState(null);
   // const [startVideoWith, setstartVideoWith] = useState(-1);
@@ -103,3 +103,5 @@ export const CurrentCourse = () => {
     </>
   );
 };
+
+export default CurrentCourse;

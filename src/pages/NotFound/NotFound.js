@@ -1,7 +1,7 @@
 import { Title } from 'components/Title/Title';
 import styles from './NotFound.module.scss';
 
-export const NotFound = () => {
+const NotFound = () => {
   return (
     <div className={styles['not-found']}>
       <Title main tag="h2">
@@ -10,3 +10,5 @@ export const NotFound = () => {
     </div>
   );
 };
+
+export default NotFound;
