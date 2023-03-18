@@ -15,7 +15,7 @@
     }
   }
 
-  // @if $screen==tablet-only {
+  // @if $screen==tab-only {
   //   @media screen and (min-width: $tablet) and (max-width: #{$desktop - 0.02}) {
   //     @content;
   //   }
@@ -33,11 +33,11 @@
     }
   }
 
-  // @if $screen==notDesktop {
-  //   @media screen and (max-width: #{$desktop - 0.02}) {
-  //     @content;
-  //   }
-  // }
+  @if $screen==notDesk {
+    @media screen and (max-width: #{$desktop - 0.02}) {
+      @content;
+    }
+  }
 
   // @if $screen==retina {
 

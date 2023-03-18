@@ -1,0 +1,64 @@
+@import "../../sass/mixins.scss";
+@import "../../sass/variables.scss";
+ 
+.lessons-list {
+  width: 100%;
+
+  @include mq(desk) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
+
+.lesson {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  background-color: $seccond-bg-color;
+  border-radius: 10px;
+
+  @include mq(desk) {
+      width: calc((100% - 20px) / 2);
+        gap: 20px;
+  }
+
+  &:not(:last-child) {
+  @include mq(notDesk) {
+  margin-bottom: 10px;
+  } 
+
+}
+}
+
+.lesson-number-wrapp {
+  @include center;
+}
+
+.lesson-number {
+width: 25px;
+}
+
+.img-wrapp {
+  position: relative;
+  width: 100px;
+  height: 50px;
+  background-color: $black-bg-color;
+  
+  @include mq(tab) {
+    width: 200px;
+    height: 100px;
+  }
+}
+
+.image {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+// .title {
+//   font-size: 20px;
+//   // flex-grow: 1;
+// }

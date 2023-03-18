@@ -1,0 +1,9 @@
+.locked-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: #fc0404;
+  z-index: 2;
+}

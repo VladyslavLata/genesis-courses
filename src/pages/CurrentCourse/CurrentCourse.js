@@ -5,6 +5,8 @@ import { getCourse } from 'API/API';
 import { videoPlayerInit } from 'utils/videoPlayerInit';
 import { Title } from 'components/Title/Title';
 import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
+import { LessonsList } from 'components/LessonsList/LessonsList';
+import { LockedMessage } from 'components/LockedMessage/LockedMessage';
 import styles from './CurrentCourse.module.scss';
 
 export const CurrentCourse = () => {
@@ -72,7 +74,7 @@ export const CurrentCourse = () => {
     <>
       {course && currentLesson && (
         <>
-          <div>
+          <div className={styles['video-wrapp']}>
             <video
               id={courseId}
               controls
@@ -80,6 +82,9 @@ export const CurrentCourse = () => {
               poster={`${currentLesson?.previewImageLink}/lesson.order.webp`}
               onTimeUpdate={throttle(e => saveCurrentTimeVideo(e), 1000)}
             ></video>
+            {currentLesson && currentLesson.status === 'locked' && (
+              <LockedMessage>This video is blocked</LockedMessage>
+            )}
           </div>
           <Title tag="h2">
             {`Current lesson: ${currentLesson.order} - ${currentLesson.title}`}
@@ -96,6 +101,12 @@ export const CurrentCourse = () => {
             </CoursesInfo>
           </div>
         </>
+      )}
+      {course && (
+        <LessonsList
+          lessons={course.lessons}
+          onChangeCurrenLesson={setCurrentLesson}
+        />
       )}
     </>
   );
