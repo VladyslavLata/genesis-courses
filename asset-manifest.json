@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/genesis-courses/static/css/main.8e9d7ee5.css",
-    "main.js": "/genesis-courses/static/js/main.c4fdfd73.js",
+    "main.css": "/genesis-courses/static/css/main.d63d45bb.css",
+    "main.js": "/genesis-courses/static/js/main.d5b2ef83.js",
     "index.html": "/genesis-courses/index.html",
-    "main.8e9d7ee5.css.map": "/genesis-courses/static/css/main.8e9d7ee5.css.map",
-    "main.c4fdfd73.js.map": "/genesis-courses/static/js/main.c4fdfd73.js.map"
+    "main.d63d45bb.css.map": "/genesis-courses/static/css/main.d63d45bb.css.map",
+    "main.d5b2ef83.js.map": "/genesis-courses/static/js/main.d5b2ef83.js.map"
   },
   "entrypoints": [
-    "static/css/main.8e9d7ee5.css",
-    "static/js/main.c4fdfd73.js"
+    "static/css/main.d63d45bb.css",
+    "static/js/main.d5b2ef83.js"
   ]
 }
