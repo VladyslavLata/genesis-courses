@@ -1,0 +1,19 @@
+@import "../../sass/variables.scss";
+@import "../../sass//mixins.scss";
+
+.btn-icon {
+  @include center;
+  display: inline-flex;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: $main-btn-bg-color;
+  cursor: pointer;
+  transition: background-color 250ms $cubic;
+
+  &:hover, :focus {
+    background-color: $accent-btn-bg-color;
+  }
+}

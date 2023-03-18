@@ -7,6 +7,7 @@ export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
     <ul className={styles['lessons-list']}>
       {lessons.map(lesson => {
         const { id, previewImageLink, status, title, order } = lesson;
+        // console.log(`${previewImageLink}/${order}.webp`);
         return (
           <li
             key={id}
@@ -20,7 +21,7 @@ export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
               <div className={styles['img-wrapp']}>
                 <img
                   className={styles.image}
-                  src={`${previewImageLink}/lesson.order.webp`}
+                  src={`${previewImageLink}/${order}.webp`}
                   alt="Preview of the lesson"
                 />{' '}
                 {status === 'locked' && <LockedMessage>Locked</LockedMessage>}

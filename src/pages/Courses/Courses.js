@@ -12,11 +12,15 @@ export const Courses = () => {
   const currentPage = searchParams.get('page');
 
   useEffect(() => {
-    if (!currentPage) {
-      setSearchParams({ page: page });
-    } else {
+    // if (!currentPage) {
+    //   setSearchParams({ page: page });
+    // } else {
+    if (currentPage) {
       setPage(Number(currentPage));
+    } else if (!currentPage) {
+      setPage(1);
     }
+    // }
   }, [currentPage, page, searchParams, setSearchParams]);
 
   useEffect(() => {

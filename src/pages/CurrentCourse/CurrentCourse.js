@@ -2,26 +2,36 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import throttle from 'lodash.throttle';
 import { getCourse } from 'API/API';
-import { videoPlayerInit } from 'utils/videoPlayerInit';
+// import { videoPlayerInit } from 'utils/videoPlayerInit';
+import { useVideoPlayer } from 'hooks/useVideoPlayer';
 import { Title } from 'components/Title/Title';
 import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
 import { LessonsList } from 'components/LessonsList/LessonsList';
 import { LockedMessage } from 'components/LockedMessage/LockedMessage';
+// import { Modal } from 'components/Modal/Modal';
+import { useStore } from 'Store/Store';
+import { VscMultipleWindows } from 'react-icons/vsc';
+import { ButtonIcon } from 'components/ButtonIcon/ButtonIcon';
 import styles from './CurrentCourse.module.scss';
 
 export const CurrentCourse = () => {
   const [course, setCourse] = useState(null);
   const [currentLesson, setCurrentLesson] = useState(null);
-  const [startVideoWith, setstartVideoWith] = useState(-1);
+  // const [startVideoWith, setstartVideoWith] = useState(-1);
   // const [time, setTime] = useState(0);
   const { courseId } = useParams();
   // const th = throttle();
+  const onOpenModal = useStore(state => state.openModal);
+  const addLessonOnModalVideo = useStore(state => state.addLesson);
 
   useEffect(() => {
     const getDataCourse = async () => {
       try {
         const course = await getCourse(courseId);
-        setCourse(course);
+        const sortCourse = [...course.lessons].sort(
+          (a, b) => a.order - b.order
+        );
+        setCourse({ ...course, lessons: [...sortCourse] });
       } catch (error) {
         console.log(error.message);
       }
@@ -37,38 +47,40 @@ export const CurrentCourse = () => {
     setCurrentLesson(course.lessons[0]);
   }, [course]);
 
-  useEffect(() => {
-    if (!currentLesson) {
-      return;
-    }
-    const videoElement = document.getElementById(courseId);
-    const time = JSON.parse(
-      localStorage.getItem(`Lesson-id-${currentLesson.id}`)
-    );
-    console.log(time);
-    if (time) {
-      setstartVideoWith(time);
-    }
-    const hls = videoPlayerInit(
-      currentLesson.link,
-      videoElement,
-      startVideoWith
-    );
+  const { saveCurrentTimeVideo } = useVideoPlayer(currentLesson);
 
-    return () => {
-      hls.destroy();
-    };
-  }, [currentLesson, courseId, startVideoWith]);
+  // useEffect(() => {
+  //   if (!currentLesson) {
+  //     return;
+  //   }
+  //   const videoElement = document.getElementById(courseId);
+  //   const time = JSON.parse(
+  //     localStorage.getItem(`Lesson-id-${currentLesson.id}`)
+  //   );
+  //   // console.log(time);
+  //   if (time) {
+  //     setstartVideoWith(time);
+  //   }
+  //   const hls = videoPlayerInit(
+  //     currentLesson.link,
+  //     videoElement,
+  //     startVideoWith
+  //   );
 
-  const saveCurrentTimeVideo = e => {
-    if (!e.target.currentTime) {
-      return;
-    }
-    localStorage.setItem(
-      `Lesson-id-${currentLesson.id}`,
-      JSON.stringify(Math.floor(e.target.currentTime))
-    );
-  };
+  //   return () => {
+  //     hls.destroy();
+  //   };
+  // }, [currentLesson, courseId, startVideoWith]);
+
+  // const saveCurrentTimeVideo = e => {
+  //   if (!e.target.currentTime) {
+  //     return;
+  //   }
+  //   localStorage.setItem(
+  //     `Lesson-id-${currentLesson.id}`,
+  //     JSON.stringify(Math.floor(e.target.currentTime))
+  //   );
+  // };
 
   return (
     <>
@@ -76,10 +88,11 @@ export const CurrentCourse = () => {
         <>
           <div className={styles['video-wrapp']}>
             <video
+              className={styles.video}
               id={courseId}
               controls
               width="100%"
-              poster={`${currentLesson?.previewImageLink}/lesson.order.webp`}
+              poster={`${currentLesson?.previewImageLink}/${currentLesson.order}.webp`}
               onTimeUpdate={throttle(e => saveCurrentTimeVideo(e), 1000)}
             ></video>
             {currentLesson && currentLesson.status === 'locked' && (
@@ -87,7 +100,15 @@ export const CurrentCourse = () => {
             )}
           </div>
           <Title tag="h2">
-            {`Current lesson: ${currentLesson.order} - ${currentLesson.title}`}
+            {`Current lesson: ${currentLesson.order} - ${currentLesson.title}`}{' '}
+            <ButtonIcon
+              onClick={() => {
+                onOpenModal();
+                addLessonOnModalVideo(currentLesson);
+              }}
+            >
+              <VscMultipleWindows />
+            </ButtonIcon>
           </Title>
           <div>
             {course && <Title main>{`Course: ${course.title}`}</Title>}
@@ -108,6 +129,7 @@ export const CurrentCourse = () => {
           onChangeCurrenLesson={setCurrentLesson}
         />
       )}
+      {/* <Modal /> */}
     </>
   );
 };

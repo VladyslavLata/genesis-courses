@@ -1,32 +1,46 @@
-import { useEffect } from 'react';
-import Hls from 'hls.js';
+import { useEffect, useState } from 'react';
+// import Hls from 'hls.js';
+import { videoPlayerInit } from 'utils/videoPlayerInit';
+import { useParams } from 'react-router-dom';
 
-export const useVideoPlayer = ({ linkVideo, id }) => {
-  // const [hls, setHls] = useState();
-  const videoElement = document.getElementById(id);
+export const useVideoPlayer = (currentLesson, visibleModal) => {
+  const [startVideoWith, setstartVideoWith] = useState(-1);
+  const { courseId } = useParams();
+
+  const currentId = visibleModal ? currentLesson.id : courseId;
 
   useEffect(() => {
-    // const dd = () => {
-    let hls = null;
-    if (Hls.isSupported()) {
-      hls = new Hls();
-      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-        console.log('video and hls.js are now bound together !');
-      });
-      hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-        console.log(
-          'manifest loaded, found ' + data.levels.length + ' quality level'
-        );
-      });
-      hls.loadSource(`${linkVideo}`);
-      // bind them together
-      hls.attachMedia(videoElement);
+    if (!currentLesson) {
+      return;
     }
-    // };
-    // dd();
+    const videoElement = document.getElementById(currentId);
+    const time = JSON.parse(
+      localStorage.getItem(`Lesson-id-${currentLesson.id}`)
+    );
+    // console.log(time);
+    if (time) {
+      setstartVideoWith(time);
+    }
+    const hls = videoPlayerInit(
+      currentLesson.link,
+      videoElement,
+      startVideoWith
+    );
 
-    // return () => {
-    //   dd().destroy();
-    // };
-  }, [linkVideo, videoElement]);
+    return () => {
+      hls.destroy();
+    };
+  }, [currentLesson, currentId, startVideoWith]);
+
+  const saveCurrentTimeVideo = e => {
+    if (!e.target.currentTime) {
+      return;
+    }
+    localStorage.setItem(
+      `Lesson-id-${currentLesson.id}`,
+      JSON.stringify(Math.floor(e.target.currentTime))
+    );
+  };
+
+  return { saveCurrentTimeVideo };
 };
