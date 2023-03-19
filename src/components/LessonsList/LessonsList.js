@@ -21,7 +21,7 @@ export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
               <div className={styles['img-wrapp']}>
                 <img
                   className={styles.image}
-                  src={`${previewImageLink}/${order}.webp`}
+                  src={`${previewImageLink}/lesson-${order}.webp`}
                   alt="Preview of the lesson"
                 />{' '}
                 {status === 'locked' && <LockedMessage>Locked</LockedMessage>}

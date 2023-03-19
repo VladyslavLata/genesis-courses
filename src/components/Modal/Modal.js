@@ -29,7 +29,7 @@ export const Modal = () => {
         id={lesson.id}
         controls
         width="100%"
-        poster={`${lesson?.previewImageLink}/${lesson.order}.webp`}
+        poster={`${lesson?.previewImageLink}/lesson-${lesson.order}.webp`}
         onTimeUpdate={throttle(e => saveCurrentTimeVideo(e), 1000)}
       ></video>
     </div>,

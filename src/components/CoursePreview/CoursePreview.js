@@ -17,6 +17,7 @@ export const CoursePreview = ({ course }) => {
     previewImageLink,
   } = course;
   const videoElement = document.getElementById(id);
+  console.log(videoElement);
   // useVideoPlayer(toString(meta.courseVideoPreview?.link), id);
   // useVideoPlayer()
   useEffect(() => {

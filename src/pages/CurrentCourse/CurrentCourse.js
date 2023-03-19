@@ -60,7 +60,7 @@ const CurrentCourse = () => {
               id={courseId}
               controls={currentLesson.status === 'unlocked'}
               width="100%"
-              poster={`${currentLesson?.previewImageLink}/${currentLesson.order}.webp`}
+              poster={`${currentLesson?.previewImageLink}/lesson-${currentLesson.order}.webp`}
               onTimeUpdate={throttle(e => saveCurrentTimeVideo(e), 1000)}
             ></video>
             {currentLesson && currentLesson.status === 'locked' && (
