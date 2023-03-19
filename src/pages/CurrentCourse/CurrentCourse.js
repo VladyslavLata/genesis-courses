@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import throttle from 'lodash.throttle';
 import { getCourse } from 'API/API';
@@ -21,7 +21,8 @@ const CurrentCourse = () => {
   // const [startVideoWith, setstartVideoWith] = useState(-1);
   // const [time, setTime] = useState(0);
   const { courseId } = useParams();
-  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const currentLessonNumber = searchParams.get('lesson');
   // const th = throttle();
   const onOpenModal = useStore(state => state.openModal);
   const addLessonOnModalVideo = useStore(state => state.addLesson);
@@ -30,7 +31,11 @@ const CurrentCourse = () => {
     const getDataCourse = async () => {
       try {
         const course = await getCourse(courseId);
-        setCourse({ ...course });
+        const sortCourse = [...course.lessons].sort(
+          (a, b) => a.order - b.order
+        );
+        setCourse({ ...course, lessons: [...sortCourse] });
+        // setCourse({ ...course });
       } catch (error) {
         console.log(error.message);
       }
@@ -42,9 +47,12 @@ const CurrentCourse = () => {
   useEffect(() => {
     if (!course) {
       return;
+    } else if (currentLessonNumber) {
+      setCurrentLesson(course.lessons[Number(currentLessonNumber) - 1]);
+    } else {
+      setCurrentLesson(course.lessons[0]);
     }
-    setCurrentLesson(course.lessons[0]);
-  }, [course]);
+  }, [course, currentLessonNumber]);
 
   const { saveCurrentTimeVideo } = useVideoPlayer(currentLesson);
 

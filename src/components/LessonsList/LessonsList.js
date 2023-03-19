@@ -1,8 +1,12 @@
 import styles from './LessonsList.module.scss';
+import { useSearchParams } from 'react-router-dom';
 import { LockedMessage } from 'components/LockedMessage/LockedMessage';
 import { Title } from 'components/Title/Title';
 
 export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const course = searchParams.get('course');
+
   return (
     <ul className={styles['lessons-list']}>
       {lessons.map(lesson => {
@@ -12,7 +16,10 @@ export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
           <li
             key={id}
             className={styles.lesson}
-            onClick={() => onChangeCurrenLesson(lesson)}
+            onClick={() => {
+              onChangeCurrenLesson(lesson);
+              setSearchParams({ course: course, lesson: order });
+            }}
           >
             <p className={styles['lesson-number-wrapp']}>
               <span className={styles['lesson-number']}>{order}</span>
