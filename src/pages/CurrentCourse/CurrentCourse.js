@@ -8,6 +8,7 @@ import { Title } from 'components/Title/Title';
 import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
 import { LessonsList } from 'components/LessonsList/LessonsList';
 import { LockedMessage } from 'components/LockedMessage/LockedMessage';
+import { Message } from 'components/Message/Message';
 // import { Modal } from 'components/Modal/Modal';
 import { Loader } from 'components/Loader/Loader';
 import { useStore } from 'Store/Store';
@@ -59,12 +60,13 @@ const CurrentCourse = () => {
   }, [course, currentLessonNumber]);
 
   useEffect(() => {
-    const video = document.getElementById({ courseId });
+    const video = document.getElementById(`${courseId}`);
     const changeSpeedVideo = e => {
       if (e.ctrlKey && e.code === 'ArrowUp') {
-        video.playbackRate += 0.1;
+        console.log(video?.playbackRate);
+        video.playbackRate = 3;
       } else if (e.ctrlKey && e.code === 'ArrowDown') {
-        video.playbackRate -= 0.1;
+        // video.playbackRate -= 0.1;
       }
     };
 
@@ -126,6 +128,9 @@ const CurrentCourse = () => {
         />
       )}
       {status === 'pending' && <Loader />}
+      {status === 'rejected' && (
+        <Message>Sorry, something went wrong. Try reloading the page</Message>
+      )}
     </>
   );
 };

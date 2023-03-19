@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getAllCourses } from 'API/API';
+import { Message } from 'components/Message/Message';
 // import { Container } from 'components/Container/Container';
 import { Loader } from 'components/Loader/Loader';
 import { CoursesList } from 'components/CoursesList/CoursesList';
@@ -56,7 +57,9 @@ export const Courses = () => {
       {numberOfCourses !== 0 && status === 'resolved' && (
         <PaginationPanel currentPage={page} numberOfCourses={numberOfCourses} />
       )}
-      {status === 'rejected' && <p>Error</p>}
+      {status === 'rejected' && (
+        <Message>Sorry, something went wrong. Try reloading the page</Message>
+      )}
     </>
   );
 };
