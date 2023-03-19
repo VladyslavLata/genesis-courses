@@ -9,6 +9,7 @@ import { PaginationPanel } from 'components/PaginationPanel/PaginationPanel';
 export const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [page, setPage] = useState(1);
+  const [status, setStatus] = useState('idle');
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page');
 
@@ -26,11 +27,14 @@ export const Courses = () => {
 
   useEffect(() => {
     const getCourses = async () => {
+      setStatus('pending');
       try {
         const allCourses = await getAllCourses();
-        const reverseCourses = allCourses.courses.reverse();
-        setCourses(() => [...reverseCourses]);
+        // const reverseCourses = allCourses.courses.reverse();
+        setCourses(() => [...allCourses.courses]);
+        setStatus('resolved');
       } catch (error) {
+        setStatus('rejected');
         console.log(error?.message);
       }
     };
@@ -45,11 +49,14 @@ export const Courses = () => {
   const numberOfCourses = courses.length;
   return (
     <>
-      {!numberOfCourses && <Loader />}
-      {numberOfCourses !== 0 && <CoursesList courses={visibleCourses()} />}
-      {numberOfCourses !== 0 && (
+      {status === 'pending' && <Loader />}
+      {numberOfCourses !== 0 && status === 'resolved' && (
+        <CoursesList courses={visibleCourses()} />
+      )}
+      {numberOfCourses !== 0 && status === 'resolved' && (
         <PaginationPanel currentPage={page} numberOfCourses={numberOfCourses} />
       )}
+      {status === 'rejected' && <p>Error</p>}
     </>
   );
 };

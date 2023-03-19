@@ -18,6 +18,7 @@ import styles from './CurrentCourse.module.scss';
 const CurrentCourse = () => {
   const [course, setCourse] = useState(null);
   const [currentLesson, setCurrentLesson] = useState(null);
+  const [status, setStatus] = useState('idle');
   // const [startVideoWith, setstartVideoWith] = useState(-1);
   // const [time, setTime] = useState(0);
   const { courseId } = useParams();
@@ -29,6 +30,7 @@ const CurrentCourse = () => {
 
   useEffect(() => {
     const getDataCourse = async () => {
+      setStatus('pending');
       try {
         const course = await getCourse(courseId);
         const sortCourse = [...course.lessons].sort(
@@ -36,7 +38,9 @@ const CurrentCourse = () => {
         );
         setCourse({ ...course, lessons: [...sortCourse] });
         // setCourse({ ...course });
+        setStatus('resolved');
       } catch (error) {
+        setStatus('rejected');
         console.log(error.message);
       }
     };
@@ -54,11 +58,25 @@ const CurrentCourse = () => {
     }
   }, [course, currentLessonNumber]);
 
+  useEffect(() => {
+    const video = document.getElementById({ courseId });
+    const changeSpeedVideo = e => {
+      if (e.ctrlKey && e.code === 'ArrowUp') {
+        video.playbackRate += 0.1;
+      } else if (e.ctrlKey && e.code === 'ArrowDown') {
+        video.playbackRate -= 0.1;
+      }
+    };
+
+    window.addEventListener('keydown', changeSpeedVideo);
+    return () => window.removeEventListener('keydown', changeSpeedVideo);
+  }, [courseId]);
+
   const { saveCurrentTimeVideo } = useVideoPlayer(currentLesson);
 
   return (
     <>
-      {course && currentLesson && (
+      {status === 'resolved' && currentLesson && (
         <>
           <div className={styles['video-wrapp']}>
             <video
@@ -87,7 +105,9 @@ const CurrentCourse = () => {
             )}{' '}
           </Title>
           <div>
-            {course && <Title main>{`Course: ${course.title}`}</Title>}
+            {status === 'resolved' && course && (
+              <Title main>{`Course: ${course.title}`}</Title>
+            )}
             <CoursesInfo
               lessonsCount={course.lessons.length}
               rating={course.rating}
@@ -99,13 +119,13 @@ const CurrentCourse = () => {
           </div>
         </>
       )}
-      {course && (
+      {status === 'resolved' && course && (
         <LessonsList
           lessons={course.lessons}
           onChangeCurrenLesson={setCurrentLesson}
         />
       )}
-      {!course && <Loader />}
+      {status === 'pending' && <Loader />}
     </>
   );
 };
