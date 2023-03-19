@@ -1,16 +1,12 @@
-@import "../../sass/variables.scss";
+@import '../../sass/variables.scss';
 
 .description {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .video-wrapp {
   width: 100%;
   position: relative;
-
-  // & button {
-  //   position: absolute;
-  // }
 }
 
 .video {

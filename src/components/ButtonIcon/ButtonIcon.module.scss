@@ -1,5 +1,5 @@
-@import "../../sass/variables.scss";
-@import "../../sass//mixins.scss";
+@import '../../sass/variables.scss';
+@import '../../sass//mixins.scss';
 
 .btn-icon {
   @include center;
@@ -13,7 +13,8 @@
   cursor: pointer;
   transition: background-color 250ms $cubic;
 
-  &:hover, :focus {
+  &:hover,
+  :focus {
     background-color: $accent-btn-bg-color;
   }
 }

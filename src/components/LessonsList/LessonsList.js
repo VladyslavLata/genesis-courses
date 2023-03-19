@@ -11,7 +11,6 @@ export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
     <ul className={styles['lessons-list']}>
       {lessons.map(lesson => {
         const { id, previewImageLink, status, title, order } = lesson;
-        // console.log(`${previewImageLink}/${order}.webp`);
         return (
           <li
             key={id}
@@ -34,7 +33,6 @@ export const LessonsList = ({ lessons, onChangeCurrenLesson }) => {
                 {status === 'locked' && <LockedMessage>Locked</LockedMessage>}
               </div>
             </div>
-            {/* <h3 className={styles.title}>{title}</h3> */}
             <Title tag="h3">{title}</Title>
           </li>
         );

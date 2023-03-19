@@ -2,14 +2,12 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import throttle from 'lodash.throttle';
 import { getCourse } from 'API/API';
-// import { videoPlayerInit } from 'utils/videoPlayerInit';
 import { useVideoPlayer } from 'hooks/useVideoPlayer';
 import { Title } from 'components/Title/Title';
 import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
 import { LessonsList } from 'components/LessonsList/LessonsList';
 import { LockedMessage } from 'components/LockedMessage/LockedMessage';
 import { Message } from 'components/Message/Message';
-// import { Modal } from 'components/Modal/Modal';
 import { Loader } from 'components/Loader/Loader';
 import { useStore } from 'Store/Store';
 import { VscMultipleWindows } from 'react-icons/vsc';
@@ -20,12 +18,11 @@ const CurrentCourse = () => {
   const [course, setCourse] = useState(null);
   const [currentLesson, setCurrentLesson] = useState(null);
   const [status, setStatus] = useState('idle');
-  // const [startVideoWith, setstartVideoWith] = useState(-1);
-  // const [time, setTime] = useState(0);
+
   const { courseId } = useParams();
   const [searchParams] = useSearchParams();
   const currentLessonNumber = searchParams.get('lesson');
-  // const th = throttle();
+
   const onOpenModal = useStore(state => state.openModal);
   const addLessonOnModalVideo = useStore(state => state.addLesson);
 
@@ -38,7 +35,6 @@ const CurrentCourse = () => {
           (a, b) => a.order - b.order
         );
         setCourse({ ...course, lessons: [...sortCourse] });
-        // setCourse({ ...course });
         setStatus('resolved');
       } catch (error) {
         setStatus('rejected');
@@ -64,15 +60,20 @@ const CurrentCourse = () => {
     const changeSpeedVideo = e => {
       if (e.ctrlKey && e.code === 'ArrowUp') {
         console.log(video?.playbackRate);
-        video.playbackRate = 3;
+        video.playbackRate += 0.1;
       } else if (e.ctrlKey && e.code === 'ArrowDown') {
-        // video.playbackRate -= 0.1;
+        video.playbackRate -= 0.1;
       }
     };
 
     window.addEventListener('keydown', changeSpeedVideo);
     return () => window.removeEventListener('keydown', changeSpeedVideo);
   }, [courseId]);
+
+  const onStopVideo = () => {
+    const video = document.getElementById(`${courseId}`);
+    video?.pause();
+  };
 
   const { saveCurrentTimeVideo } = useVideoPlayer(currentLesson);
 
@@ -100,6 +101,7 @@ const CurrentCourse = () => {
                 onClick={() => {
                   onOpenModal();
                   addLessonOnModalVideo(currentLesson);
+                  onStopVideo();
                 }}
               >
                 <VscMultipleWindows />
@@ -114,7 +116,6 @@ const CurrentCourse = () => {
               lessonsCount={course.lessons.length}
               rating={course.rating}
               metaInfo={course.meta}
-              // skillListStyle="main-skills-list"
             >
               <b className={styles.description}>{course.description}</b>
             </CoursesInfo>

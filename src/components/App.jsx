@@ -1,8 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { SharedLayuot } from './SharedLayuot/SharedLayuot';
 import { Courses } from 'pages/Courses/Courses';
-// import { NotFound } from 'pages/NotFound/NotFound';
-// import { CurrentCourse } from 'pages/CurrentCourse/CurrentCourse';
 import { Modal } from './Modal/Modal';
 import { useStore } from 'Store/Store';
 import { lazy } from 'react';

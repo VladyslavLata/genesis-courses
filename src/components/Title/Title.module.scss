@@ -1,18 +1,18 @@
 @import '../../sass/mixins.scss';
 
 .title-main {
-text-align: center;
-font-size: 26px;
+  text-align: center;
+  font-size: 26px;
 
-@include mq(tab) {
-font-size: 36px;
-}
+  @include mq(tab) {
+    font-size: 36px;
+  }
 }
 
 .title-seccond {
   font-size: 20px;
 
   @include mq(tab) {
-      font-size: 28px;
-    }
+    font-size: 28px;
+  }
 }

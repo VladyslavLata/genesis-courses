@@ -11,7 +11,6 @@ const modalEl = document.getElementById('modal');
 export const Modal = () => {
   const lesson = useStore(state => state.yourCurrentLesson);
   const closeModal = useStore(state => state.closeModal);
-  console.log(lesson);
   const { saveCurrentTimeVideo } = useVideoPlayer(lesson, true);
 
   return createPortal(
@@ -25,8 +24,8 @@ export const Modal = () => {
       </ButtonIcon>
 
       <video
-        // className={styles.video}
         id={lesson.id}
+        autoPlay
         controls
         width="100%"
         poster={`${lesson?.previewImageLink}/lesson-${lesson.order}.webp`}

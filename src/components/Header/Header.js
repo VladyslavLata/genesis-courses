@@ -9,7 +9,6 @@ export const Header = () => {
       <Container>
         <div className={styles.wrapp}>
           <Link to="/">
-            {' '}
             <Title tag="h3" main>
               GENESIS COURSES
             </Title>

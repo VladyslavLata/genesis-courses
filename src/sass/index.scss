@@ -1,5 +1,4 @@
-/* @import-normalize; bring in normalize.css styles */
-@import "./variables.scss";
+@import './variables.scss';
 
 body {
   margin: 0;
@@ -13,20 +12,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $main-bg-color;
-
 }
-
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
 
 ::-webkit-scrollbar {
   width: 10px;
   height: 8px;
   background-color: $seccond-bg-color;
-
 }
 
 ::-webkit-scrollbar-thumb {
@@ -42,13 +33,6 @@ a {
 * {
   box-sizing: border-box;
 }
-
-/* *::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
 
 h1,
 h2,
@@ -69,4 +53,5 @@ ol {
 
 img,
 svg {
-  display: block;}
+  display: block;
+}

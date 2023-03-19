@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import Hls from 'hls.js';
 import { videoPlayerInit } from 'utils/videoPlayerInit';
 import { useParams } from 'react-router-dom';
 
@@ -17,7 +16,6 @@ export const useVideoPlayer = (currentLesson, visibleModal) => {
     const time = JSON.parse(
       localStorage.getItem(`Lesson-id-${currentLesson.id}`)
     );
-    // console.log(time);
     if (time) {
       setstartVideoWith(time);
     }

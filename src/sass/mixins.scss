@@ -15,12 +15,6 @@
     }
   }
 
-  // @if $screen==tab-only {
-  //   @media screen and (min-width: $tablet) and (max-width: #{$desktop - 0.02}) {
-  //     @content;
-  //   }
-  // }
-
   @if $screen==tab {
     @media screen and (min-width: $tablet) {
       @content;
@@ -38,23 +32,10 @@
       @content;
     }
   }
-
-  // @if $screen==retina {
-
-  //   @media screen and (min-device-pixel-ratio: 2),
-  //   screen and (-moz-min-device-pixel-ratio: 2),
-  //   screen and (-o-min-device-pixel-ratio: 2/1),
-  //   screen and (-webkit-min-device-pixel-ratio: 2),
-  //   screen and (min-resolution: 192dpi),
-  //   screen and (min-resolution: 2dppx) {
-  //     @content;
-  //   }
-  // }
-
-}  
+}
 
 @mixin center {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

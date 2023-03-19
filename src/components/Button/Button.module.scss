@@ -1,4 +1,4 @@
-@import "../../sass/variables.scss";
+@import '../../sass/variables.scss';
 
 .btn {
   min-width: 120px;
@@ -9,10 +9,11 @@
   background-color: $main-btn-bg-color;
   border: none;
   border-radius: 10px;
- 
+
   transition: background-color 250ms $cubic;
 
-  &:not(:disabled):hover, :focus {
+  &:not(:disabled):hover,
+  :focus {
     background-color: $accent-btn-bg-color;
     cursor: pointer;
   }

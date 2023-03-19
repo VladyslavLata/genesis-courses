@@ -1,13 +1,7 @@
 import styles from './CoursecInfo.module.scss';
 import { useParams } from 'react-router-dom';
 
-export const CoursesInfo = ({
-  lessonsCount,
-  rating,
-  metaInfo,
-  // skillListStyle,
-  children,
-}) => {
+export const CoursesInfo = ({ lessonsCount, rating, metaInfo, children }) => {
   const { courseId } = useParams();
   const styleCourseInfoWrapp = courseId ? '' : 'footer-course';
   const skillListStyle = courseId ? '' : 'skills-list';

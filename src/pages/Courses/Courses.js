@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getAllCourses } from 'API/API';
 import { Message } from 'components/Message/Message';
-// import { Container } from 'components/Container/Container';
 import { Loader } from 'components/Loader/Loader';
 import { CoursesList } from 'components/CoursesList/CoursesList';
 import { PaginationPanel } from 'components/PaginationPanel/PaginationPanel';
@@ -15,15 +14,11 @@ export const Courses = () => {
   const currentPage = searchParams.get('page');
 
   useEffect(() => {
-    // if (!currentPage) {
-    //   setSearchParams({ page: page });
-    // } else {
     if (currentPage) {
       setPage(Number(currentPage));
     } else if (!currentPage) {
       setPage(1);
     }
-    // }
   }, [currentPage, page, searchParams, setSearchParams]);
 
   useEffect(() => {
@@ -31,7 +26,6 @@ export const Courses = () => {
       setStatus('pending');
       try {
         const allCourses = await getAllCourses();
-        // const reverseCourses = allCourses.courses.reverse();
         setCourses(() => [...allCourses.courses]);
         setStatus('resolved');
       } catch (error) {
@@ -46,7 +40,6 @@ export const Courses = () => {
   const visibleCourses = () =>
     courses.slice(10 * (Number(page) - 1), 10 * Number(page));
 
-  // console.log(courses);
   const numberOfCourses = courses.length;
   return (
     <>

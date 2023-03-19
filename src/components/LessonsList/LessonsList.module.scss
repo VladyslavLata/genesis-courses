@@ -1,6 +1,6 @@
-@import "../../sass/mixins.scss";
-@import "../../sass/variables.scss";
- 
+@import '../../sass/mixins.scss';
+@import '../../sass/variables.scss';
+
 .lessons-list {
   width: 100%;
   margin-top: 20px;
@@ -19,19 +19,26 @@
   padding: 10px;
   background-color: $seccond-bg-color;
   border-radius: 10px;
+  border: 3px solid;
+  border-color: transparent;
   cursor: pointer;
+  transition: border-color 250ms $cubic;
 
   @include mq(desk) {
-      width: calc((100% - 20px) / 2);
-        gap: 20px;
+    width: calc((100% - 20px) / 2);
+    gap: 20px;
   }
 
   &:not(:last-child) {
-  @include mq(notDesk) {
-  margin-bottom: 10px;
-  } 
+    @include mq(notDesk) {
+      margin-bottom: 10px;
+    }
+  }
 
-}
+  &:hover,
+  :focus {
+    border-color: #f5ff62;
+  }
 }
 
 .lesson-number-wrapp {
@@ -39,7 +46,7 @@
 }
 
 .lesson-number {
-width: 25px;
+  width: 25px;
 }
 
 .img-wrapp {
@@ -47,7 +54,7 @@ width: 25px;
   width: 100px;
   height: 50px;
   background-color: $black-bg-color;
-  
+
   @include mq(tab) {
     width: 200px;
     height: 100px;
@@ -59,8 +66,3 @@ width: 25px;
   width: 100%;
   object-fit: contain;
 }
-
-// .title {
-//   font-size: 20px;
-//   // flex-grow: 1;
-// }
