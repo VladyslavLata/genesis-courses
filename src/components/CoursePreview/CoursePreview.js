@@ -16,48 +16,44 @@ export const CoursePreview = ({ course }) => {
     meta,
     previewImageLink,
   } = course;
-  const videoElement = document.getElementById(id);
-  console.log(videoElement);
+
   // useVideoPlayer(toString(meta.courseVideoPreview?.link), id);
   // useVideoPlayer()
   useEffect(() => {
+    const videoElement = document.getElementById(id);
     if (!videoElement) {
-      console.log(videoElement);
       return;
     }
+
     const hls = videoPlayerInit(
       meta.courseVideoPreview?.link,
       videoElement,
       -1
     );
-    // let hls = null;
-    // if (Hls.isSupported()) {
-    //   hls = new Hls();
-    //   hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-    //     console.log('video and hls.js are now bound together !');
-    //   });
-    //   hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-    //     console.log(
-    //       'manifest loaded, found ' + data.levels.length + ' quality level'
-    //     );
-    //   });
-    //   hls.loadSource(`${meta.courseVideoPreview?.link}`);
-    //   // bind them together
-    //   hls.attachMedia(videoElement);
-    // }
 
     return () => {
       hls.destroy();
     };
-  }, [id, meta.courseVideoPreview?.link, videoElement]);
+  }, [id, meta.courseVideoPreview?.link]);
 
   const togglePlayVideo = e => {
-    console.log(e);
     e.stopPropagation();
-    if (e.type === 'mouseover') {
-      videoElement?.play();
-    } else if (e.type === 'mouseleave') {
-      videoElement?.pause();
+    const videoPlayer = e.target;
+    switch (e.type) {
+      case 'mouseover':
+        if (!videoPlayer.buffered?.length) {
+          return;
+        }
+        videoPlayer.play();
+        break;
+      case 'mouseleave':
+        if (!videoPlayer.buffered?.length) {
+          return;
+        }
+        videoPlayer.pause();
+        break;
+      default:
+        return;
     }
   };
 
@@ -75,7 +71,7 @@ export const CoursePreview = ({ course }) => {
         >
           <video
             id={id}
-            controls
+            // controls
             muted
             width="100%"
             poster={`${previewImageLink}/cover.webp`}
