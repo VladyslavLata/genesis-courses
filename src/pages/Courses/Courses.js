@@ -41,7 +41,7 @@ export const Courses = () => {
   const visibleCourses = () =>
     courses.slice(10 * (Number(page) - 1), 10 * Number(page));
 
-  console.log(courses);
+  // console.log(courses);
   const numberOfCourses = courses.length;
   return (
     <>

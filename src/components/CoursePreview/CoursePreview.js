@@ -1,12 +1,16 @@
 import styles from './CoursePreview.module.scss';
 import { useEffect } from 'react';
+import { useBufferingCounter } from 'hooks/useBufferingCounter';
 // import Hls from 'hls.js';
 // import { useVideoPlayer } from 'hooks/useVideoPlayer';
 import { videoPlayerInit } from 'utils/videoPlayerInit';
 // import { useVideoPlayer } from 'hooks/useVideoPlayer';
+import { VideoLoader } from 'components/VideoLoader/VideoLoader';
 import { CoursesInfo } from 'components/CoursesInfo/CoursesInfo';
 
 export const CoursePreview = ({ course }) => {
+  // const [bufferCounter, SetBufferCounter] = useState(0);
+  const { bufferCounter, onBufferCounter } = useBufferingCounter();
   const {
     id,
     title,
@@ -17,14 +21,11 @@ export const CoursePreview = ({ course }) => {
     previewImageLink,
   } = course;
 
-  // useVideoPlayer(toString(meta.courseVideoPreview?.link), id);
-  // useVideoPlayer()
   useEffect(() => {
     const videoElement = document.getElementById(id);
     if (!videoElement) {
       return;
     }
-
     const hls = videoPlayerInit(
       meta.courseVideoPreview?.link,
       videoElement,
@@ -57,7 +58,18 @@ export const CoursePreview = ({ course }) => {
     }
   };
 
-  // const ratingStyles = rating >= 4 ? 'rating-l' : 'rating-m';
+  // const onBufferCounter = e => {
+  //   const duration = e.target.duration;
+  //   const currentBufferingPercent = Math.ceil(
+  //     e.target.buffered.end(0) / (duration / 100)
+  //   );
+  //   if (currentBufferingPercent > 100) {
+  //     SetBufferCounter(100);
+  //   } else {
+  //     SetBufferCounter(currentBufferingPercent);
+  //   }
+  // };
+
   return (
     <>
       {/* <h2 className={styles.title}>Course</h2> */}
@@ -71,43 +83,19 @@ export const CoursePreview = ({ course }) => {
         >
           <video
             id={id}
-            // controls
+            controls
             muted
             width="100%"
             poster={`${previewImageLink}/cover.webp`}
+            onProgress={e => onBufferCounter(e)}
           ></video>
+          <VideoLoader currentBufferingPercent={bufferCounter} />
         </div>
         <CoursesInfo
           lessonsCount={lessonsCount}
           rating={rating}
           metaInfo={meta}
-          // skillListStyle={'skills-list'}
         />
-        {/* <div className={styles['footer-course']}>
-          <div className={styles['leson-rating-wrapp']}>
-            <p>
-              <span className={styles['characteristics-accent']}>Lesons:</span>
-              {` ${lessonsCount}`}
-            </p>
-            <p className={`${styles.rating} ${styles[ratingStyles]}`}>
-              {rating}
-            </p>
-          </div>
-          <p className={styles['characteristics-accent']}>Skills:</p>
-          <ul className={styles['skills-list']}>
-            {meta?.skills?.map((skill, i) => (
-              <li key={`${skill}${i}`}>
-                <p>{skill}</p>
-              </li>
-            ))}
-          </ul>
-        </div> */}
-        {/* <ReactPlayer
-        url={meta.courseVideoPreview?.link}
-        width={200}
-        height={200}
-      /> */}
-        {/* <div></div> */}
       </div>
     </>
   );

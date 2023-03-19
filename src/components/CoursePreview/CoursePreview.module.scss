@@ -26,6 +26,7 @@
 }
 
 .video-player-wrapp {
+  position: relative;
   @include center;
   margin-bottom: 10px;
   width: 100%;
@@ -36,7 +37,13 @@
   @include mq(desk) {
     height: 400px;
   }
+
+  &:hover p {
+opacity: 0;
+  }
 }
+
+
 
 // .video-player {
 // }

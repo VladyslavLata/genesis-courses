@@ -21,6 +21,7 @@ const CurrentCourse = () => {
   // const [startVideoWith, setstartVideoWith] = useState(-1);
   // const [time, setTime] = useState(0);
   const { courseId } = useParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   // const th = throttle();
   const onOpenModal = useStore(state => state.openModal);
   const addLessonOnModalVideo = useStore(state => state.addLesson);
@@ -29,10 +30,7 @@ const CurrentCourse = () => {
     const getDataCourse = async () => {
       try {
         const course = await getCourse(courseId);
-        const sortCourse = [...course.lessons].sort(
-          (a, b) => a.order - b.order
-        );
-        setCourse({ ...course, lessons: [...sortCourse] });
+        setCourse({ ...course });
       } catch (error) {
         console.log(error.message);
       }
